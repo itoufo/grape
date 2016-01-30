@@ -3,6 +3,8 @@ module Grape
     class Base
       attr_reader :attrs
 
+      include Grape::Util::HashParameter
+
       # Creates a new Validator from options specified
       # by a +requires+ or +optional+ directive during
       # parameter definition.
@@ -40,25 +42,6 @@ module Grape
         Validations.register_validator(short_name, klass)
       end
 
-      def deem_hash_array?(hash)
-        unless hash.present?
-          return false
-        end
-
-        hash.keys.each do |key|
-          unless integer_string?(key)
-            return false
-          end
-        end
-        true
-      end
-
-      def integer_string?(str)
-        Integer(str)
-        true
-      rescue ArgumentError
-        false
-      end
     end
   end
 end

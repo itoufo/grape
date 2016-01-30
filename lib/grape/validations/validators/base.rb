@@ -39,6 +39,26 @@ module Grape
         short_name = convert_to_short_name(klass)
         Validations.register_validator(short_name, klass)
       end
+
+      def deem_hash_array?(hash)
+        unless hash.present?
+          return false
+        end
+
+        hash.keys.each do |key|
+          unless integer_string?(key)
+            return false
+          end
+        end
+        true
+      end
+
+      def integer_string?(str)
+        Integer(str)
+        true
+      rescue ArgumentError
+        false
+      end
     end
   end
 end

@@ -29,20 +29,6 @@ module Grape
         true
       end
 
-      def deem_hash_array?(hash)
-        hash.keys.each do |key|
-          return false unless integer_string?(key)
-        end
-        true
-      end
-
-      def integer_string?(str)
-        Integer(str)
-        true
-      rescue ArgumentError
-        false
-      end
-
       def coerce_value(val)
         # Don't coerce things other than nil to Arrays or Hashes
         unless (@option[:method] && !val.nil?) || type.is_a?(Virtus::Attribute)

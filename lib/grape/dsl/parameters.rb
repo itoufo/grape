@@ -188,6 +188,7 @@ module Grape
       # @api private
       def params(params)
         params = @parent.params(params) if @parent
+
         if @element
           if params.is_a?(Array)
             params = params.flat_map { |el| el[@element] || {} }
@@ -197,7 +198,34 @@ module Grape
             params = {}
           end
         end
+
+        if params.is_a?(Hash) && deem_hash_array?(params)
+          params = params.values
+        end
+
         params
+      end
+
+      def deem_hash_array?(hash)
+        unless hash.present?
+          return false
+        end
+
+        hash.keys.each do |key|
+          unless integer_string?(key)
+            return false
+          end
+        end
+        true
+      end
+
+      def integer_string?(str)
+        Integer(str)
+        true
+      rescue ArgumentError
+        false
+      rescue TypeError
+        false
       end
     end
   end

@@ -23,8 +23,24 @@ module Grape
 
         # Allow nil, to ignore when a parameter is absent
         return true if val.nil?
+        unless !type.is_a?(Types::VariantCollectionCoercer) && type == Array && val.is_a?(Hash) && deem_hash_array?(val)
+          return converter.value_coerced? val
+        end
+        true
+      end
 
-        converter.value_coerced? val
+      def deem_hash_array?(hash)
+        hash.keys.each do |key|
+          return false unless integer_string?(key)
+        end
+        true
+      end
+
+      def integer_string?(str)
+        Integer(str)
+        true
+      rescue ArgumentError
+        false
       end
 
       def coerce_value(val)

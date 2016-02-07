@@ -102,13 +102,7 @@ describe Grape::Validations::DefaultValidator do
   it 'sets default values for grouped arrays with index' do
     get('/array?array[0][name]=name&array[1][name]=name2&array[0][with_default]=bar1')
     expect(last_response.status).to eq(200)
-    expect(last_response.body).to eq(
-      { array:
-        {
-          '0': { name: 'name', with_default: 'bar1' },
-          '1': { name: 'name2', with_default: 'default' }
-        }
-      }.to_json)
+    expect(last_response.body).to eq({ array: { 0 => { name: 'name', with_default: 'bar1' }, 1 => { name: 'name2', with_default: 'default' } } }.to_json)
   end
 
   context 'optional group with defaults' do

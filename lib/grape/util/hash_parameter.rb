@@ -5,11 +5,7 @@ module Grape
       extend ActiveSupport::Concern
 
       def deem_hash_array?(hash)
-        return false unless hash.present?
-
-        hash.keys.each do |key|
-          return false unless integer_string?(key)
-        end
+        return false unless hash.is_a?(Hash) && hash.keys.any? { |key| integer_string?(key) }
         true
       end
 

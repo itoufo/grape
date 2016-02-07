@@ -41,7 +41,6 @@ module Grape
         short_name = convert_to_short_name(klass)
         Validations.register_validator(short_name, klass)
       end
-
     end
   end
 end

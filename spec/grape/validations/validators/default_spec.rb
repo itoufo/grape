@@ -105,8 +105,8 @@ describe Grape::Validations::DefaultValidator do
     expect(last_response.body).to eq(
       { array:
         {
-          :'0' => { name: 'name', with_default: 'bar1' },
-          :'1' => { name: 'name2', with_default: 'default' }
+          '0': { name: 'name', with_default: 'bar1' },
+          '1': { name: 'name2', with_default: 'default' }
         }
       }.to_json)
   end

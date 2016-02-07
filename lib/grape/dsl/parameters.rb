@@ -201,9 +201,7 @@ module Grape
           end
         end
 
-        if params.is_a?(Hash) && deem_hash_array?(params)
-          params = params.values
-        end
+        params = params.values if params.is_a?(Hash) && deem_hash_array?(params)
 
         params
       end
